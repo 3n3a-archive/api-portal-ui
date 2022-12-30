@@ -2,7 +2,8 @@
 
 ## TODO
 
-* create token storage
+* use token storage
+* successful signup and authentication
 
 ## Used in this Project
 
