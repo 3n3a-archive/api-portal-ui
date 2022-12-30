@@ -1,4 +1,9 @@
+import { useAppStore } from '@/store/app';
+import { useAuthStore } from '@/store/auth';
+import { RemovableRef } from '@vueuse/core';
+
 import type {AxiosInstance} from 'axios'
+import { Store } from 'pinia';
 
 interface LoginBody {
   username_or_email: string
@@ -28,14 +33,25 @@ interface SignupResponse {
 export class Auth {
   $axios: AxiosInstance;
   token: string;
+  authStore: Store<"auth", {
+    username: RemovableRef<string>;
+    token: RemovableRef<string>;
+}, {}, {}>;
+  appStore: Store<"app", {
+    isAuthenticated: boolean;
+    drawer: boolean;
+}, {}, {}>;
   constructor(axios: AxiosInstance) {
     this.$axios = axios;
-    this.token = '' // TODO: get token from localstorage
+    this.authStore = useAuthStore()
+    this.appStore = useAppStore()
+    this.token = this.authStore.token
   }
 
   async loginWithEmailAndPassword(loginBody: LoginBody): Promise<LoginResponse> {
     this.$axios.defaults.headers.common['Authorization'] = ''
     const loginResponse = await this.$axios.post('/api/auth/login', loginBody)
+    // TODO: add username and token to authstore
     return loginResponse.data
   }
 
