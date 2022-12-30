@@ -1,4 +1,4 @@
-# Opionated Vuetify 3 Boilerplate
+# API Portal UI
 
 ## Used in this Project
 
