@@ -9,6 +9,7 @@ import { loadFonts } from './webfontloader'
 import vuetify from './vuetify'
 import pinia from '../store'
 import router from '../router'
+import axios from './axios'
 
 // Types
 import type { App } from 'vue'
@@ -19,4 +20,7 @@ export function registerPlugins (app: App) {
     .use(vuetify)
     .use(router)
     .use(pinia)
+    .use(axios, {
+      baseUrl: process.env.API_URL,
+    })
 }
