@@ -1,7 +1,9 @@
 <template>
-  <Home />
+  <v-main>
+    <router-view />
+  </v-main>
 </template>
 
 <script lang="ts" setup>
-  import Home from '@/components/Home.vue'
+  //
 </script>

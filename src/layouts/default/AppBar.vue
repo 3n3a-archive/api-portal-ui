@@ -1,13 +1,19 @@
 <template>
-  <v-app-bar flat>
+  <v-app-bar :elevation="2">
     <v-app-bar-title>
       <v-icon icon="mdi-circle-slice-6" />
 
-      Essentials Preset
+      <v-btn
+        icon="mdi-menu"
+        @click="app.drawer = !app.drawer"
+      />
     </v-app-bar-title>
   </v-app-bar>
 </template>
 
 <script lang="ts" setup>
-  //
+  // Composables
+  import { useAppStore } from '@/store/app';
+
+  const app = useAppStore();
 </script>

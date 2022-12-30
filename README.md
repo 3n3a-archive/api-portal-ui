@@ -1,4 +1,10 @@
-# API Portal UI
+# Opionated Vuetify 3 Boilerplate
+
+## Used in this Project
+
+* vuetify 3 (next)
+* vuejs 3
+* vue-router
 
 ## Project setup
 
@@ -23,3 +29,7 @@ npm run build
 ```
 npm run lint
 ```
+
+### Customize configuration
+
+See [Configuration Reference](https://vitejs.dev/config/).

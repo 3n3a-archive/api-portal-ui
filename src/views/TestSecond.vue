@@ -1,7 +1,7 @@
 <template>
-  <Home />
+  <h1>Test 2</h1>
 </template>
 
 <script lang="ts" setup>
-  import Home from '@/components/Home.vue'
+  //
 </script>
