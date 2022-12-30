@@ -12,6 +12,7 @@
     "@mdi/font": "7.0.96",
     "@types/axios": "^0.14.0",
     "@vueuse/core": "^9.9.0",
+    "@vueuse/head": "^1.0.22",
     "axios": "^1.2.2",
     "core-js": "^3.8.3",
     "pinia": "^2.0.23",
