@@ -46,6 +46,9 @@ export class Auth {
     this.authStore = useAuthStore()
     this.appStore = useAppStore()
     this.token = this.authStore.token
+
+    // add token as default
+    this.$axios.defaults.headers.common['Authorization'] = `Bearer ${this.token}`
   }
 
   async loginWithEmailAndPassword(loginBody: LoginBody): Promise<LoginResponse> {
@@ -62,11 +65,7 @@ export class Auth {
   }
 
   async logout(): Promise<Boolean> {
-    const logout = await this.$axios.post('/api/auth/logout', undefined, {
-      headers: {
-        Authorization: `Bearer ${this.token}`
-      }
-    })
+    const logout = await this.$axios.post('/api/auth/logout')
     if (logout.status === 200) {
       return true
     } else {
