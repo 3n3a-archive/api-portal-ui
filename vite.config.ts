@@ -22,7 +22,7 @@ export default defineConfig({
   ],
   define: { 'process.env': {
     BASE_URL: '',
-    API_URL: ''
+    API_URL: 'http://localhost:8000'
   } },
   resolve: {
     alias: {

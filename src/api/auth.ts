@@ -3,6 +3,7 @@ import { useAuthStore } from '@/store/auth';
 import { RemovableRef } from '@vueuse/core';
 
 import type {AxiosInstance} from 'axios'
+import axios from 'axios';
 import { Store } from 'pinia';
 
 interface LoginBody {
@@ -21,17 +22,19 @@ interface LoginToken {
 }
 
 interface LoginResponse {
+  code: number
   message: string
   data: LoginToken | string
 }
 
 interface SignupResponse {
+  code: number
   message: string
   data: string
 }
 
 export class Auth {
-  $axios: AxiosInstance;
+  http: AxiosInstance;
   token: string;
   authStore: Store<"auth", {
     username: RemovableRef<string>;
@@ -41,35 +44,59 @@ export class Auth {
     isAuthenticated: boolean;
     drawer: boolean;
 }, {}, {}>;
-  constructor(axios: AxiosInstance) {
-    this.$axios = axios;
+  constructor() {
+    this.http = axios.create({
+      baseURL: process.env.API_URL,
+      validateStatus: (status) => {
+        return status < 500
+      }
+    });
     this.authStore = useAuthStore()
     this.appStore = useAppStore()
     this.token = this.authStore.token
 
     // add token as default
-    this.$axios.defaults.headers.common['Authorization'] = `Bearer ${this.token}`
+    this.http.defaults.headers.common['Authorization'] = `Bearer ${this.token}`
+  }
+
+  async ping(): Promise<boolean> {
+    this.http.defaults.headers.common['Authorization'] = ''
+    const pingResponse = await this.http.get('/api/ping')
+    if (pingResponse.status === 200) {
+      return true
+    }
+    return false
   }
 
   async loginWithEmailAndPassword(loginBody: LoginBody): Promise<LoginResponse> {
-    this.$axios.defaults.headers.common['Authorization'] = ''
-    const loginResponse = await this.$axios.post('/api/auth/login', loginBody)
+    
+    this.http.defaults.headers.common['Authorization'] = ''
+    const loginResponse = await this.http.post('/api/auth/login', loginBody)
     // TODO: add username and token to authstore
-    return loginResponse.data
+    return {
+      code: loginResponse.status,
+      ...loginResponse.data
+    }
   }
 
   async signupWithEmailAndPassword(signupBody: SignupBody): Promise<SignupResponse> {
-    this.$axios.defaults.headers.common['Authorization'] = ''
-    const signupResponse = await this.$axios.post('/api/auth/signup', signupBody)
-    return signupResponse.data
+    this.http.defaults.headers.common['Authorization'] = ''
+    const signupResponse = await this.http.post('/api/auth/signup', signupBody)
+    return {
+      code: signupResponse.status,
+      ...signupResponse.data
+    }
   }
 
   async logout(): Promise<Boolean> {
-    const logout = await this.$axios.post('/api/auth/logout')
+    const logout = await this.http.post('/api/auth/logout')
     if (logout.status === 200) {
       return true
-    } else {
-      return false
     }
+    return false
   }
+}
+
+export function useAuth() {
+  return new Auth();
 }

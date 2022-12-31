@@ -1,7 +1,6 @@
 <template>
 
   <h1 class="text-h2 font-weight-bold">Register</h1>
-  <div class="py-14" />
   <RegisterForm />
   <div class="py-5" />
   <RouterLink to="/auth/login">

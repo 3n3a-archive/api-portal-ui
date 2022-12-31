@@ -9,7 +9,6 @@ import { loadFonts } from './webfontloader'
 import vuetify from './vuetify'
 import pinia from '../store'
 import router from '../router'
-import axios from './axios'
 import { createHead } from "@vueuse/head"
 
 // Types
@@ -24,7 +23,4 @@ export function registerPlugins (app: App) {
     .use(head)
     .use(router)
     .use(pinia)
-    .use(axios, {
-      baseUrl: process.env.API_URL,
-    })
 }
