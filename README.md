@@ -4,6 +4,7 @@
 
 * use token storage
 * successful signup and authentication
+* redirecting after sccessful signup / login not working
 
 ## Used in this Project
 
