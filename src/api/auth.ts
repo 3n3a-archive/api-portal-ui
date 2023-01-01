@@ -71,15 +71,16 @@ export class Auth {
   async loginWithEmailAndPassword(loginBody: LoginBody): Promise<LoginResponse> {
 
     this.http.defaults.headers.common['Authorization'] = ''
-    const loginResponse = await this.http.post('/api/auth/login', loginBody)
-    this.authStore.username = loginBody.username_or_email
-
-    console.log(loginResponse.data.data.token)
-    this.authStore.token = loginResponse.data.data.token
-    return {
-      code: loginResponse.status,
-      ...loginResponse.data
+    const res = await this.http.post('/api/auth/login', loginBody)
+    const loginResponse: LoginResponse = {
+      code: res.status,
+      ...res.data
     }
+    
+    this.authStore.username = loginBody.username_or_email
+    this.authStore.token = typeof loginResponse.data != 'string' ? loginResponse.data.token : ''
+
+    return loginResponse
   }
 
   async signupWithEmailAndPassword(signupBody: SignupBody): Promise<SignupResponse> {
