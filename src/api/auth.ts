@@ -69,10 +69,13 @@ export class Auth {
   }
 
   async loginWithEmailAndPassword(loginBody: LoginBody): Promise<LoginResponse> {
-    
+
     this.http.defaults.headers.common['Authorization'] = ''
     const loginResponse = await this.http.post('/api/auth/login', loginBody)
-    // TODO: add username and token to authstore
+    this.authStore.username = loginBody.username_or_email
+
+    console.log(loginResponse.data.data.token)
+    this.authStore.token = loginResponse.data.data.token
     return {
       code: loginResponse.status,
       ...loginResponse.data
