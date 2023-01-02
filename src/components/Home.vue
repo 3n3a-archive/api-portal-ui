@@ -1,73 +1,46 @@
 <template>
   <v-container class="fill-height">
     <v-responsive class="d-flex align-center text-center fill-height">
-      <v-img
-        contain
-        height="300"
-        src="@/assets/logo.svg"
-      />
-
-      <div class="text-body-2 font-weight-light mb-n1">Welcome to</div>
-
-      <h1 class="text-h2 font-weight-bold">Vuetify</h1>
+      <h1 class="text-h2 font-weight-bold">API Portal</h1>
 
       <div class="py-14" />
 
-      <v-row class="d-flex align-center justify-center">
-        <v-col cols="auto">
+      <v-list>
+        <v-list-item>
           <v-btn
-            to="/second"
-            value="second"
-            min-width="164"
-            variant="text"
+            to="/apikey"
+            value="Api Keys"
+            min-width="200"
+            density="default"
+            variant="elevated"
+            color="blue"
           >
             <v-icon
-              icon="mdi-view-dashboard"
+              icon="mdi-key"
               size="large"
               start
             />
 
-            Test Page
+            Api Keys
           </v-btn>
-        </v-col>
-
-        <v-col cols="auto">
+        </v-list-item>
+        <v-list-item>
           <v-btn
-            color="primary"
-            href="https://next.vuetifyjs.com/introduction/why-vuetify/#feature-guides"
-            min-width="228"
-            rel="noopener noreferrer"
-            size="x-large"
-            target="_blank"
-            variant="flat"
+            to="/profile"
+            value="Profile"
+            min-width="200"
+            variant="tonal"
           >
             <v-icon
-              icon="mdi-speedometer"
+              icon="mdi-account"
               size="large"
               start
             />
 
-            Get Started
+            Profile
           </v-btn>
-        </v-col>
-
-        <v-col cols="auto">
-          <v-btn
-            to="/auth/login"
-            value="login"
-            min-width="164"
-            variant="text"
-          >
-            <v-icon
-              icon="mdi-lock"
-              size="large"
-              start
-            />
-
-            Login
-          </v-btn>
-        </v-col>
-      </v-row>
+        </v-list-item>
+      </v-list>
     </v-responsive>
   </v-container>
 </template>

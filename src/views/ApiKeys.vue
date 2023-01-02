@@ -1,12 +1,18 @@
 <template>
-  <h1>Api Keys</h1>
-  <v-btn
-    icon="mdi-add"
-    @click="addKey()"
-  >
-    Create
-  </v-btn>
-  <List />
+  <div class="pa-4">
+    <h1>Api Keys</h1>
+    <v-btn
+      variant="elevated"
+      rounded
+      prepend-icon="mdi-plus"
+      color="blue"
+      @click="addKey()"
+      class="my-4"
+    >
+      Create
+    </v-btn>
+    <List :refetch-data="doRefetch" />
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -16,10 +22,16 @@
 <script lang="ts">
 import { useApiKey } from '@/api/apikey';
   export default {
+    data () {
+      return {
+        doRefetch: false
+      }
+    },
     methods: {
       async addKey() {
         const apiKey = useApiKey()
-        return await apiKey.addKey()
+        await apiKey.addKey()
+        this.doRefetch = !this.doRefetch
       }
     }
   }

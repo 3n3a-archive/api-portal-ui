@@ -20,6 +20,9 @@
   import { ApiKeyType, useApiKey } from '@/api/apikey';
 
 export default {
+  props: {
+    refetchData: Boolean
+  },
   data() {
     return {
       loading: false,
@@ -35,7 +38,7 @@ export default {
   },
   created() {
     this.$watch(
-      () => this.$route.params,
+      () => this.$props.refetchData,
       () => {
         this.fetchData()
       },

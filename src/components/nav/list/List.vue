@@ -34,6 +34,7 @@
 const computedItems = computed(() => props.items?.map(item => {
   if (item.meta?.isMenuItem && item) {
     return {
+      order: item.meta.order || 99,
       title: item.name,
       to: item.path,
       // children: item.children,
@@ -51,5 +52,16 @@ const computedItems = computed(() => props.items?.map(item => {
   // filter out duplicates
   return (self.indexOf(value) === index) &&
     ((value?.title ?? "") != "");
-}))
+}).sort((a, b) => {
+  const orderA = a?.order ?? 99
+  const orderB = b?.order ?? 99
+  if (orderA < orderB) {
+    return -1
+  }
+  if (orderA > orderB) {
+    return 1
+  }
+  return 0
+})
+)
 </script>

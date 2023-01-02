@@ -21,11 +21,30 @@
 
 
   <v-form ref="form" v-model="valid" lazy-validation class="d-flex flex-column flex-gap">
-    <v-text-field v-model="email" label="Email" :rules="emailRules" required />
+    <v-text-field
+    v-model="email"
+    label="Email"
+    :rules="emailRules"
+    required
+    @keyup.enter="validateSubmit"
+    />
 
-    <v-text-field v-model="username" label="Username" :rules="usernameRules" required />
+    <v-text-field
+    v-model="username"
+    label="Username"
+    :rules="usernameRules"
+    required
+    @keyup.enter="validateSubmit"
+    />
 
-    <v-text-field v-model="password" label="Password" :rules="passwordRules" type="password" required />
+    <v-text-field
+    v-model="password"
+    label="Password"
+    :rules="passwordRules"
+    type="password"
+    required
+    @keyup.enter="validateSubmit"
+    />
 
     <v-btn
       variant="tonal"
@@ -35,6 +54,7 @@
       color="black"
       active
       @click="validateSubmit"
+      :loading="isLoading"
     >
       Register
     </v-btn>
@@ -63,6 +83,7 @@ const auth = useAuth();
 export default {
   data: () => ({
     valid: false,
+    isLoading: false,
     message: '',
     hasMessage: false,
     isError: false,
@@ -90,22 +111,23 @@ export default {
       const { valid } = await this.$refs.form.validate()
 
       if (valid) {
+          this.isLoading = true
           const signupRes = await auth.signupWithEmailAndPassword({
             username: this.username,
             email: this.email,
             password: this.password,
           })
-          
-          if (signupRes.code === 200) {
-            this.isError = false
-            await router.push({ name: 'Login' })
-          } else {
-            this.isError = true
-            console.log('Signup failed')
-          }
-          
+
+          this.isError = signupRes.code === 200
+
           this.message = signupRes.message
           this.hasMessage = true
+
+          this.isLoading = false
+
+          if (signupRes.code === 200) {
+            router.push({ name: 'Login' })
+          }
       }
     },
     reset() {

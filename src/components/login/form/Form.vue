@@ -20,9 +20,22 @@
   <div v-else class="py-14" />
 
   <v-form ref="form" v-model="valid" lazy-validation class="d-flex flex-column flex-gap">
-    <v-text-field v-model="username" label="Username or Email" :rules="usernameRules" required />
+    <v-text-field
+    v-model="username"
+    label="Username or Email"
+    :rules="usernameRules"
+    required 
+    @keyup.enter="validateSubmit"
+    />
 
-    <v-text-field v-model="password" label="Password" :rules="passwordRules" type="password" required />
+    <v-text-field
+    v-model="password"
+    label="Password"
+    :rules="passwordRules"
+    type="password"
+    required
+    @keyup.enter="validateSubmit"
+    />
 
     <v-btn
       variant="tonal"
@@ -32,6 +45,7 @@
       color="black"
       active
       @click="validateSubmit"
+      :loading="isLoading"
     >
       Login
     </v-btn>
@@ -50,7 +64,6 @@
 
 <script lang="ts">
   // Composables
-  import { useAppStore } from '@/store/app';
   import { useAuth } from '@/api/auth';
   import { Validator } from '@/api/validator';
 
@@ -58,12 +71,12 @@
   import router from '@/router';
 
   // Definitions
-  const app = useAppStore();
   const auth = useAuth();
 
   export default {
     data: () => ({
       valid: false,
+      isLoading: false,
       message: '',
       hasMessage: false,
       isError: false,
@@ -86,25 +99,22 @@
         const { valid } = await this.$refs.form.validate()
 
         if (valid) {
+          this.isLoading = true
           const loginRes = await auth.loginWithEmailAndPassword({
             username_or_email: this.username,
             password: this.password,
           })
 
+          this.isError = loginRes.code === 200
+
+          this.message = loginRes.message
+          this.hasMessage = true
+
+          this.isLoading = false
+
           if (loginRes.code === 200) {
-            this.isError = false
-            this.message = loginRes.message
-            this.hasMessage = true
-            const routerRes = await router.push({ name: 'Home' })
-            console.log(routerRes)
-          } else {
-            this.isError = true
-            console.log('Login failed')
-            this.message = loginRes.message
-            this.hasMessage = true
+            router.push({ name: 'Home' })
           }
-
-
         }
       },
       reset() {

@@ -5,7 +5,7 @@ import { useAuthStore } from '@/store/auth';
 // Components
 import DefaultLayout from '@/layouts/default/Default.vue'
 import Home from '@/views/Home.vue'
-import Second from '@/views/TestSecond.vue'
+import Profile from '@/views/UserProfile.vue'
 import ApiKeys from '@/views/ApiKeys.vue'
 
 const routes = [
@@ -19,18 +19,20 @@ const routes = [
         component: Home,
         meta: {
           isMenuItem: true,
+          order: 1,
           inactiveIcon: 'mdi-home-outline',
           activeIcon: 'mdi-home'
         }
       },
       {
-        path: 'second',
-        name: 'Second',
-        component: Second,
+        path: 'profile',
+        name: 'Profile',
+        component: Profile,
         meta: {
           isMenuItem: true,
-          inactiveIcon: 'mdi-flask-empty-outline',
-          activeIcon: 'mdi-flask-empty'
+          order: 2,
+          inactiveIcon: 'mdi-account-outline',
+          activeIcon: 'mdi-account'
         }
       },
     ],
@@ -41,12 +43,13 @@ const routes = [
     children: [
       {
         path: '',
-        name: 'ListOfKeys',
+        name: 'Api Keys',
         component: ApiKeys,
         meta: {
           isMenuItem: true,
-          inactiveIcon: 'mdi-flask-empty-outline',
-          activeIcon: 'mdi-flask-empty'
+          order: 3,
+          inactiveIcon: 'mdi-key-outline',
+          activeIcon: 'mdi-key'
         }
       }
     ]
