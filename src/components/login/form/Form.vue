@@ -24,7 +24,7 @@
     v-model="username"
     label="Username or Email"
     :rules="usernameRules"
-    required 
+    required
     @keyup.enter="validateSubmit"
     />
 
@@ -105,7 +105,7 @@
             password: this.password,
           })
 
-          this.isError = loginRes.code === 200
+          this.isError = loginRes.code !== 200
 
           this.message = loginRes.message
           this.hasMessage = true

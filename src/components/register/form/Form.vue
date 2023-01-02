@@ -118,7 +118,7 @@ export default {
             password: this.password,
           })
 
-          this.isError = signupRes.code === 200
+          this.isError = signupRes.code !== 200
 
           this.message = signupRes.message
           this.hasMessage = true

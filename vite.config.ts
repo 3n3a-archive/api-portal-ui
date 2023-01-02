@@ -21,8 +21,7 @@ export default defineConfig({
     }),
   ],
   define: { 'process.env': {
-    BASE_URL: '',
-    API_URL: 'http://localhost:8000'
+    API_URL: process.env.API_URL
   } },
   resolve: {
     alias: {
