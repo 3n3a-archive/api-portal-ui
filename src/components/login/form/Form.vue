@@ -53,7 +53,7 @@
   import { useAppStore } from '@/store/app';
   import { useAuth } from '@/api/auth';
   import { Validator } from '@/api/validator';
-  
+
   // Other Imports
   import router from '@/router';
 
@@ -90,12 +90,11 @@
             username_or_email: this.username,
             password: this.password,
           })
-          
+
           if (loginRes.code === 200) {
             this.isError = false
             this.message = loginRes.message
             this.hasMessage = true
-            app.isAuthenticated = true
             const routerRes = await router.push({ name: 'Home' })
             console.log(routerRes)
           } else {
@@ -104,7 +103,7 @@
             this.message = loginRes.message
             this.hasMessage = true
           }
-          
+
 
         }
       },

@@ -6,6 +6,7 @@
 
 // Styles
 import '@mdi/font/css/materialdesignicons.css'
+import 'vue3-easy-data-table/dist/style.css';
 import 'vuetify/styles'
 import { aliases, mdi } from 'vuetify/iconsets/mdi'
 

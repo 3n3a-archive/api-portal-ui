@@ -1,11 +1,12 @@
 // Composables
 import { createRouter, createWebHistory } from 'vue-router'
-import { useAppStore } from '@/store/app';
+import { useAuthStore } from '@/store/auth';
 
 // Components
 import DefaultLayout from '@/layouts/default/Default.vue'
 import Home from '@/views/Home.vue'
 import Second from '@/views/TestSecond.vue'
+import ApiKeys from '@/views/ApiKeys.vue'
 
 const routes = [
   {
@@ -33,6 +34,22 @@ const routes = [
         }
       },
     ],
+  },
+  {
+    path: '/apikey/',
+    component: DefaultLayout,
+    children: [
+      {
+        path: '',
+        name: 'ListOfKeys',
+        component: ApiKeys,
+        meta: {
+          isMenuItem: true,
+          inactiveIcon: 'mdi-flask-empty-outline',
+          activeIcon: 'mdi-flask-empty'
+        }
+      }
+    ]
   },
   {
     path: '/auth/',
@@ -64,7 +81,7 @@ const router = createRouter({
 
 
 router.beforeEach(async (to, from) => {
-  const app = useAppStore();
+  const authStore = useAuthStore();
 
   // pages that won't redirect to login, if unauthenticated
   const ignoreList = [
@@ -75,7 +92,7 @@ router.beforeEach(async (to, from) => {
 
   if (
     // make sure the user is authenticated
-    !app.isAuthenticated &&
+    authStore.token === '' &&
     // ❗️ Avoid an infinite redirect
     !ignoreList.includes(to.name?.toString() ?? "")
   ) {

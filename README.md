@@ -2,9 +2,7 @@
 
 ## TODO
 
-* use token storage
-* successful signup and authentication
-* redirecting after sccessful signup / login not working
+* fix design and usability issued
 
 ## Used in this Project
 

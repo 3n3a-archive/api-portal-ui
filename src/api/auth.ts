@@ -40,10 +40,6 @@ export class Auth {
     username: RemovableRef<string>;
     token: RemovableRef<string>;
 }, {}, {}>;
-  appStore: Store<"app", {
-    isAuthenticated: boolean;
-    drawer: boolean;
-}, {}, {}>;
   constructor() {
     this.http = axios.create({
       baseURL: process.env.API_URL,
@@ -52,7 +48,6 @@ export class Auth {
       }
     });
     this.authStore = useAuthStore()
-    this.appStore = useAppStore()
     this.token = this.authStore.token
 
     // add token as default
@@ -76,7 +71,7 @@ export class Auth {
       code: res.status,
       ...res.data
     }
-    
+
     this.authStore.username = loginBody.username_or_email
     this.authStore.token = typeof loginResponse.data != 'string' ? loginResponse.data.token : ''
 
