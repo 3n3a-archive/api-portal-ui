@@ -1,9 +1,5 @@
 # API Portal UI
 
-## TODO
-
-* fix design and usability issued
-
 ## Used in this Project
 
 * vuetify 3 (next)
